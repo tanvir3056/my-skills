@@ -13,7 +13,7 @@ My Claude Code skills.
 git clone https://github.com/tanvir3056/my-skills ~/my-skills && bash ~/my-skills/install.sh
 ```
 
-It links each skill into every Claude account folder on the Mac (`~/.claude`, `~/.claude-main`, or `$CLAUDE_CONFIG_DIR`). An existing copy is moved to `skills-backup/` first.
+It links each skill into every Claude account folder on the Mac: `~/.claude`, each `~/.claude-*` account folder, and `$CLAUDE_CONFIG_DIR`. To choose folders yourself, pass them as arguments: `bash ~/my-skills/install.sh ~/.claude-work`. An existing copy is moved to `skills-backup/` first.
 
 ## Update
 

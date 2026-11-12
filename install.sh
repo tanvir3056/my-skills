@@ -7,9 +7,21 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 
 # Claude account folders to install into. Only folders that exist are used.
-candidates=("$HOME/.claude" "$HOME/.claude-main")
-if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
-  candidates+=("$CLAUDE_CONFIG_DIR")
+# Default: $CLAUDE_CONFIG_DIR, ~/.claude, and every ~/.claude-* account folder.
+# Or pass folders as arguments: bash install.sh ~/.claude-work
+candidates=()
+if [ "$#" -gt 0 ]; then
+  candidates=("$@")
+else
+  if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
+    candidates+=("$CLAUDE_CONFIG_DIR")
+  fi
+  candidates+=("$HOME/.claude")
+  for c in "$HOME"/.claude-*; do
+    if [ -e "$c/settings.json" ] || [ -d "$c/skills" ] || [ -d "$c/plugins" ]; then
+      candidates+=("$c")
+    fi
+  done
 fi
 
 dirs=()
